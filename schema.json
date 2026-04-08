@@ -1,0 +1,37 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "email": "RyH9V@example.com",
+            "password": "$2b$10$QAud8Kw1I51cIp4Ed1ThLO0s.TMcjgWQTfns9XiT7LSRvdxkCKj6O",
+            "role": "admin"
+        },
+        {
+            "id": 2,
+            "email": "4K2jI@example.com",
+            "password": "$2b$10$QAud8Kw1I51cIp4Ed1ThLO0s.TMcjgWQTfns9XiT7LSRvdxkCKj6O",
+            "role": "user"
+        },
+        {
+            "id": 3,
+            "email": "V7t4o@example.com",
+            "password": "$2b$10$QAud8Kw1I51cIp4Ed1ThLO0s.TMcjgWQTfns9XiT7LSRvdxkCKj6O",
+            "role": "user"
+        },
+        {
+            "id": 4,
+            "email": "meomapgm@gmail.com",
+            "password": "$2b$10$QAud8Kw1I51cIp4Ed1ThLO0s.TMcjgWQTfns9XiT7LSRvdxkCKj6O",
+            "role": "admin"
+        }
+    ],
+    "posts": [
+        {
+            "id": 1,
+            "title": "Hello",
+            "content": "World",
+            "userId": 1
+        }
+    ]
+    
+}

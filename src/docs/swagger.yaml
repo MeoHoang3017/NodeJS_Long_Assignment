@@ -1,0 +1,308 @@
+openapi: 3.0.3
+info:
+  title: JSON Server Assignment API
+  version: 1.0.0
+  description: API documentation for auth and dynamic resource routes.
+servers:
+  - url: http://localhost:3000
+tags:
+  - name: Auth
+  - name: Resource
+paths:
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Register new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthRequest"
+      responses:
+        "201":
+          description: User registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User registered successfully
+        "400":
+          description: Validation error or user already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Login and get access token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthRequest"
+      responses:
+        "200":
+          description: Login success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /health:
+    get:
+      tags: [Resource]
+      summary: Health check
+      responses:
+        "200":
+          description: Server and DB are healthy
+        "503":
+          description: Database disconnected
+
+  /{resource}:
+    get:
+      tags: [Resource]
+      summary: Get all items of a resource with query options
+      description: |
+        Dynamic list endpoint with pagination, sorting, field selection, full-text search,
+        relation expansion/embedding, and operator filters.
+
+        Input all query options in `queryOptions` following format URL query, example:
+        - `_page=1&_limit=10&_sort=createdAt&_order=DESC&_fields=id,title&_expand=user&_embed=comments&q=hello`
+
+        Supported operator filters are passed as query keys with suffix (add on URL):
+        - `_eq`, `_ne`, `_gt`, `_lt`, `_gte`, `_lte`, `_like`, `_in`
+        - Example: `price_gte=100`, `status_in=active,pending`
+
+        Notes:
+        - `q` performs case-insensitive search (`ILIKE`) on all text/varchar fields except `password`.
+        - Response includes header `X-Total-Count` for total records before pagination.
+      parameters:
+        - $ref: "#/components/parameters/ResourceParam"
+        - $ref: "#/components/parameters/QueryOptionsParam"
+      responses:
+        "200":
+          description: List data
+          headers:
+            X-Total-Count:
+              description: Total number of matched rows (without pagination)
+              schema:
+                type: integer
+                example: 120
+            Access-Control-Expose-Headers:
+              description: Exposed response headers for CORS clients
+              schema:
+                type: string
+                example: X-Total-Count
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+              examples:
+                basic:
+                  summary: Basic list
+                  value:
+                    - id: 1
+                      title: First post
+                    - id: 2
+                      title: Second post
+                with_expand_embed:
+                  summary: Using _expand and _embed
+                  value:
+                    - id: 1
+                      title: First post
+                      userId: 10
+                      user:
+                        id: 10
+                        email: user@example.com
+                      comments:
+                        - id: 100
+                          postId: 1
+                          body: Nice post
+        "400":
+          description: Invalid query or repository error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      tags: [Resource]
+      summary: Create one resource item
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/ResourceParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              example:
+                title: New item
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Validation error
+        "401":
+          description: Unauthorized
+        "404":
+          description: Resource not found
+
+  /{resource}/{id}:
+    get:
+      tags: [Resource]
+      summary: Get one resource item by id
+      parameters:
+        - $ref: "#/components/parameters/ResourceParam"
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: Data found
+        "404":
+          description: Not found
+    put:
+      tags: [Resource]
+      summary: Replace one resource item
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/ResourceParam"
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        "200":
+          description: Updated
+        "400":
+          description: Validation error
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    patch:
+      tags: [Resource]
+      summary: Partially update one resource item
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/ResourceParam"
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        "200":
+          description: Updated
+        "400":
+          description: Validation error
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    delete:
+      tags: [Resource]
+      summary: Delete one resource item (admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/ResourceParam"
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "204":
+          description: Deleted
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not found
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    ResourceParam:
+      name: resource
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Dynamic table/resource name
+      example: posts
+    IdParam:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      example: 1
+    QueryOptionsParam:
+      name: queryOptions
+      in: query
+      required: false
+      description: |
+        Mot o duy nhat de nhap query options.
+        Hay dien theo format:
+        `_page=1&_limit=10&_sort=createdAt&_order=DESC&_fields=id,title&_expand=user&_embed=comments&q=hello`
+        Luu y: day la o huong dan de test nhanh tren Swagger.
+      schema:
+        type: string
+      example: _page=1&_limit=10&_sort=createdAt&_order=DESC&_fields=id,title&_expand=user&_embed=comments&q=hello
+  schemas:
+    AuthRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+          example: admin@example.com
+        password:
+          type: string
+          example: secret123
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          oneOf:
+            - type: string
+            - type: object

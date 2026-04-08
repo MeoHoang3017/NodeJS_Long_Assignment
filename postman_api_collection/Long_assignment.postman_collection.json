@@ -1,0 +1,279 @@
+{
+  "info": {
+    "_postman_id": "ec89b883-cbad-4f8e-a4d1-778002b45784",
+    "name": "Long Assignment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53068388",
+    "_collection_link": "https://go.postman.co/collection/53068388-ec89b883-cbad-4f8e-a4d1-778002b45784?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get All Resources",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/posts?_expand=users",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "posts"
+          ],
+          "query": [
+            {
+              "key": "_page",
+              "value": "1",
+              "disabled": true
+            },
+            {
+              "key": "_limit",
+              "value": "2",
+              "disabled": true
+            },
+            {
+              "key": "_sort",
+              "value": "role",
+              "disabled": true
+            },
+            {
+              "key": "_order",
+              "value": "desc",
+              "disabled": true
+            },
+            {
+              "key": "q",
+              "value": "H",
+              "disabled": true
+            },
+            {
+              "key": "role_ne",
+              "value": "user",
+              "disabled": true
+            },
+            {
+              "key": "email_like",
+              "value": "meo",
+              "disabled": true
+            },
+            {
+              "key": "_expand",
+              "value": "users"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get a reosoure",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/:resources/:id",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            ":resources",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "resources",
+              "value": "users"
+            },
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Resources",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"Dog is friend\",\r\n    \"content\": \"Dog is friend not food eventhough it's really delicious\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:3000/:resources",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            ":resources"
+          ],
+          "variable": [
+            {
+              "key": "resources",
+              "value": "posts"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Put Resource",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/:resources/:id",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            ":resources",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "resources",
+              "value": ""
+            },
+            {
+              "key": "id",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Patch Resource",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/:resources/:id",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            ":resources",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "resources",
+              "value": ""
+            },
+            {
+              "key": "id",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Resource",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/:resources/:id",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            ":resources",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "resources",
+              "value": ""
+            },
+            {
+              "key": "id",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\": \"4K2jI@example.com\",\r\n    \"password\": \"123456\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:3000/auth/login",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/auth/register",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
