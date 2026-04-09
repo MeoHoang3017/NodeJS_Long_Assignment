@@ -4,7 +4,8 @@ info:
   version: 1.0.0
   description: API documentation for auth and dynamic resource routes.
 servers:
-  - url: http://localhost:3000
+  # Default to same-origin; can be overridden at runtime from .env (see src/docs/swagger.ts)
+  - url: /
 tags:
   - name: Auth
   - name: Resource

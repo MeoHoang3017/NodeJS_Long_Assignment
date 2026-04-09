@@ -1,37 +1,103 @@
 {
     "users": [
-        {
-            "id": 1,
-            "email": "RyH9V@example.com",
-            "password": "$2b$10$QAud8Kw1I51cIp4Ed1ThLO0s.TMcjgWQTfns9XiT7LSRvdxkCKj6O",
-            "role": "admin"
-        },
-        {
-            "id": 2,
-            "email": "4K2jI@example.com",
-            "password": "$2b$10$QAud8Kw1I51cIp4Ed1ThLO0s.TMcjgWQTfns9XiT7LSRvdxkCKj6O",
-            "role": "user"
-        },
-        {
-            "id": 3,
-            "email": "V7t4o@example.com",
-            "password": "$2b$10$QAud8Kw1I51cIp4Ed1ThLO0s.TMcjgWQTfns9XiT7LSRvdxkCKj6O",
-            "role": "user"
-        },
-        {
-            "id": 4,
-            "email": "meomapgm@gmail.com",
-            "password": "$2b$10$QAud8Kw1I51cIp4Ed1ThLO0s.TMcjgWQTfns9XiT7LSRvdxkCKj6O",
-            "role": "admin"
-        }
+      {
+        "id": 1,
+        "email": "RyH9V@example.com",
+        "password": "$2b$10$QAud8Kw1I51cIp4Ed1ThLO0s.TMcjgWQTfns9XiT7LSRvdxkCKj6O",
+        "role": "admin"
+      },
+      {
+        "id": 2,
+        "email": "4K2jI@example.com",
+        "password": "$2b$10$QAud8Kw1I51cIp4Ed1ThLO0s.TMcjgWQTfns9XiT7LSRvdxkCKj6O",
+        "role": "user"
+      },
+      {
+        "id": 3,
+        "email": "V7t4o@example.com",
+        "password": "$2b$10$QAud8Kw1I51cIp4Ed1ThLO0s.TMcjgWQTfns9XiT7LSRvdxkCKj6O",
+        "role": "user"
+      },
+      {
+        "id": 4,
+        "email": "meomapgm@gmail.com",
+        "password": "$2b$10$QAud8Kw1I51cIp4Ed1ThLO0s.TMcjgWQTfns9XiT7LSRvdxkCKj6O",
+        "role": "admin"
+      }
+    ],
+    "categories": [
+      { "id": 1, "name": "Công nghệ", "slug": "cong-nghe" },
+      { "id": 2, "name": "Đời sống", "slug": "doi-song" },
+      { "id": 3, "name": "Du lịch", "slug": "du-lich" }
     ],
     "posts": [
-        {
-            "id": 1,
-            "title": "Hello",
-            "content": "World",
-            "userId": 1
-        }
+      {
+        "id": 1,
+        "title": "Chào mừng đến với Blog",
+        "content": "Đây là bài viết đầu tiên trên hệ thống của chúng tôi.",
+        "userId": 1,
+        "categoryId": 2,
+        "createdAt": "2023-10-01T08:00:00Z"
+      },
+      {
+        "id": 2,
+        "title": "Top 5 Framework Javascript 2024",
+        "content": "React, Vue, và Angular vẫn đang thống trị thị trường...",
+        "userId": 4,
+        "categoryId": 1,
+        "createdAt": "2023-10-05T10:30:00Z"
+      },
+      {
+        "id": 3,
+        "title": "Kinh nghiệm du lịch Đà Lạt tự túc",
+        "content": "Đà Lạt mùa này rất đẹp, các bạn nên chuẩn bị áo ấm...",
+        "userId": 2,
+        "categoryId": 3,
+        "createdAt": "2023-10-10T15:20:00Z"
+      },
+      {
+        "id": 4,
+        "title": "Cách bảo mật tài khoản admin",
+        "content": "Luôn sử dụng 2FA và mật khẩu mạnh để bảo vệ dữ liệu.",
+        "userId": 4,
+        "categoryId": 1,
+        "createdAt": "2023-10-12T09:00:00Z"
+      }
+    ],
+    "comments": [
+      {
+        "id": 1,
+        "postId": 1,
+        "userId": 2,
+        "content": "Chào admin, bài viết rất hay!",
+        "createdAt": "2023-10-02T07:15:00Z"
+      },
+      {
+        "id": 2,
+        "postId": 2,
+        "userId": 3,
+        "content": "Mình thấy Next.js hiện tại cũng rất mạnh.",
+        "createdAt": "2023-10-06T11:00:00Z"
+      },
+      {
+        "id": 3,
+        "postId": 3,
+        "userId": 1,
+        "content": "Cảm ơn bạn đã chia sẻ kinh nghiệm nhé.",
+        "createdAt": "2023-10-11T12:00:00Z"
+      },
+      {
+        "id": 4,
+        "postId": 2,
+        "userId": 1,
+        "content": "Đúng vậy, hệ sinh thái React rất lớn.",
+        "createdAt": "2023-10-06T14:30:00Z"
+      }
+    ],
+    "likes": [
+      { "id": 1, "postId": 2, "userId": 1 },
+      { "id": 2, "postId": 2, "userId": 2 },
+      { "id": 3, "postId": 3, "userId": 4 },
+      { "id": 4, "postId": 1, "userId": 3 }
     ]
-    
-}
+  }
